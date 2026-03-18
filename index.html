@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRAVE — Food Ordering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loader-screen" id="loaderScreen">
+    <div class="loader-inner">
+      <div class="loader-logo">CRAVE</div>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+      <div class="loader-text">Curating your experience…</div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header-left">
+      <div class="logo">
+        <span class="logo-icon">🔥</span>
+        <span class="logo-text">CRAVE</span>
+      </div>
+      <nav class="nav-pills" id="navPills">
+        <button class="nav-pill active" data-category="all">All</button>
+        <button class="nav-pill" data-category="pizza">🍕 Pizza</button>
+        <button class="nav-pill" data-category="burger">🍔 Burgers</button>
+        <button class="nav-pill" data-category="drinks">🥤 Drinks</button>
+        <button class="nav-pill" data-category="desserts">🍰 Desserts</button>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search dishes…" autocomplete="off" />
+        <button class="search-clear" id="searchClear">✕</button>
+      </div>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <span class="theme-icon">☽</span>
+      </button>
+      <button class="cart-btn" id="cartBtn">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="heroSection">
+    <div class="hero-bg-blobs">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-tag">✦ Fast · Fresh · Fantastic</div>
+      <h1 class="hero-title">
+        Food that<br/>
+        <span class="hero-gradient">Craves Back</span>
+      </h1>
+      <p class="hero-sub">Order from our chef-curated menu. Delivered hot, in minutes.</p>
+      <button class="hero-cta" id="heroCta">
+        <span>Explore Menu</span>
+        <span class="cta-arrow">↓</span>
+      </button>
+    </div>
+    <div class="hero-float-cards">
+      <div class="float-card fc1">
+        <span class="fc-emoji">🍕</span>
+        <div><strong>Margherita</strong><br/><small>₹299</small></div>
+      </div>
+      <div class="float-card fc2">
+        <span class="fc-emoji">⭐</span>
+        <div><strong>4.9 Rating</strong><br/><small>2k+ reviews</small></div>
+      </div>
+      <div class="float-card fc3">
+        <span class="fc-emoji">⚡</span>
+        <div><strong>30 min</strong><br/><small>Avg delivery</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <main class="menu-section" id="menuSection">
+    <div class="section-header">
+      <h2 class="section-title">Our Menu</h2>
+      <span class="item-count" id="itemCount">24 items</span>
+    </div>
+    <div class="food-grid" id="foodGrid">
+      <!-- Food cards rendered by JS -->
+    </div>
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <div class="empty-emoji">🍽️</div>
+      <h3>No dishes found</h3>
+      <p>Try a different search or category</p>
+    </div>
+  </main>
+
+  <!-- Cart Overlay -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+
+  <!-- Cart Panel -->
+  <aside class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <h2 class="cart-title">Your Order</h2>
+      <button class="cart-close" id="cartClose">✕</button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <!-- Cart items rendered by JS -->
+      <div class="cart-empty" id="cartEmpty">
+        <div class="cart-empty-animation">
+          <div class="empty-bowl">🥣</div>
+          <div class="empty-dots">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <p>Your cart is empty</p>
+        <small>Add some delicious food!</small>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="bill-summary">
+        <div class="bill-row">
+          <span>Subtotal</span>
+          <span id="subtotalVal">₹0</span>
+        </div>
+        <div class="bill-row">
+          <span>GST (5%)</span>
+          <span id="gstVal">₹0</span>
+        </div>
+        <div class="bill-row delivery">
+          <span>Delivery</span>
+          <span class="free-tag">FREE</span>
+        </div>
+        <div class="bill-divider"></div>
+        <div class="bill-row total">
+          <span>Total</span>
+          <span id="totalVal">₹0</span>
+        </div>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn">
+        <span class="checkout-text">Place Order</span>
+        <span class="checkout-icon">→</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Order Success Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="success-modal" id="successModal">
+      <div class="success-animation">
+        <div class="success-ring"></div>
+        <div class="success-check">✓</div>
+      </div>
+      <h2>Order Placed! 🎉</h2>
+      <p>Your food is being prepared with love.</p>
+      <div class="order-id">Order #<span id="orderId"></span></div>
+      <div class="delivery-estimate">
+        <span class="est-icon">🛵</span>
+        <span>Estimated delivery: <strong>25–35 mins</strong></span>
+      </div>
+      <button class="modal-close-btn" id="modalCloseBtn">Track Order</button>
+    </div>
+  </div>
+
+  <!-- Floating Cart Button (mobile) -->
+  <button class="float-cart-btn" id="floatCartBtn" style="display:none;">
+    <span>🛒</span>
+    <span class="float-badge" id="floatBadge">0</span>
+    <span class="float-total" id="floatTotal">₹0</span>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
